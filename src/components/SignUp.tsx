@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ApiResponse } from '../types/ApiResponse';
 
@@ -13,17 +14,20 @@ const Signup = () => {
         try {
             setError(null);
             setSuccess(null);
-            
-            const response = await axios.post<ApiResponse>('https://squid-app-avanu.ondigitalocean.app/api/auth/signup', {
-                name,
-                email,
-                password,
-            });
-            
+
+            const response = await axios.post<ApiResponse>(
+                'https://squid-app-avanu.ondigitalocean.app/api/auth/signup',
+                {
+                    name,
+                    email,
+                    password,
+                }
+            );
+
             const token = response.data.token;
             localStorage.setItem('token', token);
             setSuccess('Signup successful!');
-            
+
             // Clear the form
             setEmail('');
             setPassword('');
@@ -76,6 +80,17 @@ const Signup = () => {
                     {error && <p className="text-center text-red-500">{error}</p>}
                     {success && <p className="text-center text-green-500">{success}</p>}
                 </div>
+
+               
+                <p className="mt-4 text-center text-gray-600">
+                    Already have an account?{' '}
+                    <Link
+                        to="/signin"
+                        className="font-semibold text-blue-600 hover:underline"
+                    >
+                        Sign in
+                    </Link>
+                </p>
             </div>
         </div>
     );
