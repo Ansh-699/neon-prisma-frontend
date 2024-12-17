@@ -12,7 +12,6 @@ const Signup = () => {
     const [success, setSuccess] = useState<string | null>(null);
     const [googleLoginMessage, setGoogleLoginMessage] = useState<string | null>(null);
 
-    // Handle manual signup
     const handleSignup = async () => {
         try {
             setError(null);
@@ -32,7 +31,6 @@ const Signup = () => {
             localStorage.setItem('token', token);
             setSuccess('Signup successful!');
 
-            // Clear the form
             setEmail('');
             setPassword('');
             setName('');
@@ -47,14 +45,12 @@ const Signup = () => {
         }
     };
 
-    // Handle Google Login Success
     const handleGoogleSuccess = (credentialResponse: any) => {
         console.log('Google Credentials:', credentialResponse);
         setGoogleLoginMessage('Login successful!');
         setError(null);
     };
 
-    // Handle Google Login Failure
     const handleGoogleError = () => {
         setGoogleLoginMessage(null);
         setError('Google login failed. Please try again.');
@@ -67,7 +63,6 @@ const Signup = () => {
                     Create your account
                 </h2>
                 <div className="space-y-4">
-                    {/* Input Fields */}
                     <input
                         type="text"
                         value={name}
@@ -89,8 +84,6 @@ const Signup = () => {
                         placeholder="Password"
                         className="w-full rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
                     />
-                    
-                    {/* Sign Up Button */}
                     <button
                         onClick={handleSignup}
                         className="w-full rounded-md bg-black py-2 text-white hover:bg-gray-600 focus:outline-none"
@@ -98,7 +91,7 @@ const Signup = () => {
                         Sign Up
                     </button>
 
-                    {/* Display Errors and Success Messages */}
+                    {/* Error and Success Messages */}
                     {error && <p className="text-center text-red-500">{error}</p>}
                     {success && <p className="text-center text-green-500">{success}</p>}
                     {googleLoginMessage && (
@@ -106,16 +99,22 @@ const Signup = () => {
                     )}
                 </div>
 
-                {/* Google Login */}
-                <div className="mt-4 text-center">
+                {/* Separator */}
+                <div className="my-6 flex items-center justify-center">
+                    <div className="w-full border-t border-gray-300"></div>
+                    <div className="mx-3 text-gray-500">or</div>
+                    <div className="w-full border-t border-gray-300"></div>
+                </div>
+
+                {/* Google Login Button */}
+                <div className="mt-4 flex justify-center">
                     <GoogleLogin
                         onSuccess={handleGoogleSuccess}
                         onError={handleGoogleError}
                     />
                 </div>
 
-                {/* Already Have an Account */}
-                <p className="mt-4 text-center text-gray-600">
+                <p className="mt-6 text-center text-gray-600">
                     Already have an account?{' '}
                     <Link
                         to="/signin"
