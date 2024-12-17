@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ApiResponse } from '../types/ApiResponse';
 
@@ -10,10 +11,13 @@ const SignIn = () => {
 
     const handleSignIn = async () => {
         try {
-            const response = await axios.post<ApiResponse>('https://squid-app-avanu.ondigitalocean.app/api/auth/signin', {
-                email,
-                password,
-            });
+            const response = await axios.post<ApiResponse>(
+                'https://squid-app-avanu.ondigitalocean.app/api/auth/signin',
+                {
+                    email,
+                    password,
+                }
+            );
             const token = response.data.token;
             localStorage.setItem('token', token);
             setSuccess('Login successful!');
@@ -44,7 +48,7 @@ const SignIn = () => {
                         placeholder="Password"
                         className="w-full rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
                     />
-                    <button 
+                    <button
                         onClick={handleSignIn}
                         className="w-full rounded-md bg-black py-2 text-white hover:bg-gray-600 focus:outline-none"
                     >
@@ -53,6 +57,17 @@ const SignIn = () => {
                     {error && <p className="text-center text-red-500">{error}</p>}
                     {success && <p className="text-center text-green-500">{success}</p>}
                 </div>
+
+                {/* Add the Sign-Up Link */}
+                <p className="mt-4 text-center text-gray-600">
+                    Dont have an account?{' '}
+                    <Link
+                        to="/signup"
+                        className="font-semibold text-blue-600 hover:underline"
+                    >
+                        Sign up
+                    </Link>
+                </p>
             </div>
         </div>
     );
